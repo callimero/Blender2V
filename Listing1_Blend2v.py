@@ -1,5 +1,5 @@
 # Blender2v scope/vectrex output. 
-# 2016 cw@blenderbuch.de
+# 2017 cw@blenderbuch.de
 
 # Zum Starten [Run Script] Button oder ALT-P über diesem Fenster!
 

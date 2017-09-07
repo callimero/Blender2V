@@ -1,9 +1,9 @@
-# Blender2v scope/vectrex output. 
-# 2016 cw@blenderbuch.de
+# Blender2v scope/vectrex output. Now supporting Modifiers
+# 2016, 2017 cw@blenderbuch.de
 
 # Zum Starten [Run Script] Button oder ALT-P über diesem Fenster!
 
-COM="COM10"     # zu benutzender Serieller Port
+COM="COM19"     # zu benutzender Serieller Port
 
 # Zum Debuggen/entwickeln nicht den Handler verwenden, dieser lässt sich nicht
 # 100% entfernen und blockiert dann die Serielle Schnittstelle.
@@ -119,13 +119,14 @@ class SerHandle(object):
         cam_direction = self.cam.matrix_world.to_quaternion() * Vector((0.0, 0.0, -1.0))
 
         # Nur über sichtbare Objekte in der Szene iterieren
-        for ob in bpy.context.visible_objects:
-            if (ob.type in ['MESH']):       # Nur Meshes
-                me = ob.data
-                wx = ob.location.x
-                wy = ob.location.y
-                mat = ob.matrix_world
-                verts = ob.data.vertices
+        for obj in bpy.context.visible_objects:
+            if (obj.type in ['MESH']):       # Nur Meshes
+                # Modifier anwenden
+                me = obj.to_mesh(self.scene, apply_modifiers=True,settings='PREVIEW')
+                wx = obj.location.x
+                wy = obj.location.y
+                mat = obj.matrix_world
+                verts = me.vertices
                 edges = me.edges
                 for ed in edges:
                     v0_2d = bpy_extras.object_utils.world_to_camera_view(
