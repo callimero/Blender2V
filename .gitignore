@@ -2,8 +2,9 @@
 Thumbs.db
 ehthumbs.db
 
-#Blender Backups
+# Backups
 *.blend*
+*.bak
 
 # Folder config file
 Desktop.ini

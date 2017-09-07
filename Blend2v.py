@@ -8,7 +8,7 @@ COM="COM19"     # zu benutzender Serieller Port
 # Zum Debuggen/entwickeln nicht den Handler verwenden, dieser lässt sich nicht
 # 100% entfernen und blockiert dann die Serielle Schnittstelle.
 HAND = True      # Handler benutzen
-HAND = False     # Pro Aufruf einmal die Daten senden
+HAND = False     # Pro Aufruf einmal die Daten senden 
 
 import serial
 import bpy
