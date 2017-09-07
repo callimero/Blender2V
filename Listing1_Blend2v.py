@@ -1,5 +1,5 @@
-# Blender2v scope/vectrex output. 
-# 2017 cw@blenderbuch.de
+# Blender2v scope/vectrex output. Now supporting Modifiers
+# 2016, 2017 cw@blenderbuch.de
 
 # Zum Starten [Run Script] Button oder ALT-P über diesem Fenster!
 
@@ -21,7 +21,7 @@ class SerHandle(object):
     def __init__(self):
         self.sock=None
         self.sock = serial.Serial(COM, 9600,timeout=5)
-        self.scene = bpy.context.scene
+
         self.cam = bpy.data.objects.get("Camera")
         if self.cam == None:
             print("Keine Kamera!")
@@ -51,6 +51,10 @@ class SerHandle(object):
     def send2v(self):
         vbytes = bytearray(4)   # vier 0-bytes als Header
  
+        # Undo-Problematik Crash umschiffen
+        self.scene = bpy.context.scene
+        self.cam = bpy.data.objects.get("Camera")
+
         # Faktoren für Umrechnung Weltkoordinaten auf Kamerasicht
         render_scale = self.scene.render.resolution_percentage / 100
         render_size = 	(int(self.scene.render.resolution_x * render_scale),
