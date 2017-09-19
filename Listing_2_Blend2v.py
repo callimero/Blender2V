@@ -57,19 +57,19 @@ class SerHandle(object):
 
         # Faktoren für Umrechnung Weltkoordinaten auf Kamerasicht
         render_scale = self.scene.render.resolution_percentage / 100
-        render_size = 	(int(self.scene.render.resolution_x * render_scale),
-						 int(self.scene.render.resolution_y * render_scale))
+        render_size = (int(self.scene.render.resolution_x * render_scale),int(self.scene.render.resolution_y * render_scale))
         up = self.cam.matrix_world.to_quaternion() * Vector((0.0, 1.0, 0.0))
         cam_direction = self.cam.matrix_world.to_quaternion() * Vector((0.0, 0.0, -1.0))
 
         # Nur über sichtbare Objekte in der Szene iterieren
-        for ob in bpy.context.visible_objects:
-            if (ob.type in ['MESH']):       # Nur Meshes
-                me = ob.data
-                wx = ob.location.x
-                wy = ob.location.y
-                mat = ob.matrix_world
-                verts = ob.data.vertices
+        for obj in bpy.context.visible_objects:
+            if (obj.type in ['MESH']):       # Nur Meshes
+                # Modifier anwenden
+                me = obj.to_mesh(self.scene, apply_modifiers=True,settings='PREVIEW')
+                wx = obj.location.x
+                wy = obj.location.y
+                mat = obj.matrix_world
+                verts = me.vertices
                 edges = me.edges
                 for ed in edges:
                     v0_2d = bpy_extras.object_utils.world_to_camera_view(
